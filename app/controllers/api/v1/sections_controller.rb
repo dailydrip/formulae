@@ -8,6 +8,15 @@ class Api::V1::SectionsController < Api::V1::ApiController
     render json: @sections
   end
 
+  def create
+    @section = Section.new(section_params)
+    if @section.save!
+      render json: @section, status: :created
+    else
+      render json: @section.errors, status: :unprocessable_entity
+    end
+  end
+
   def show
     render json: @section
   end

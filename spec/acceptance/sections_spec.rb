@@ -38,6 +38,22 @@ resource 'Sections' do
     end
   end
 
+  post 'api/v1/forms/:form_id/sections' do
+    parameter :form_id, scope: :section
+    parameter :name, scope: :section
+    parameter :content, scope: :section
+
+    let(:name) { section.name }
+    let(:content) { section.content }
+    let(:form_id) { section.form_id }
+
+    example_request 'Creating a new Section' do
+      response = JSON.parse(response_body)
+      expect(response.keys).to eq %w[id form_id name order content created_at updated_at]
+      expect(status).to eq(201)
+    end
+  end
+
   delete 'api/v1/sections/:id' do
     example_request 'Deleting a Section' do
       expect(status).to eq(204)
