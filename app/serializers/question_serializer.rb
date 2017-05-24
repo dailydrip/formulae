@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class QuestionSerializer < ActiveModel::Serializer
-  attributes :id, :key, :label, :content, :required, :order, :hidden, :question_type, :validate_as, :question_dependency
+  attributes :id, :key, :label, :content, :required,
+             :order, :hidden, :question_type, :validate_as,
+             :question_dependency, :section_id, :choices
 
   # Not calling question dependency serializer, not sure why
   def question_dependency
@@ -18,4 +20,5 @@ class QuestionSerializer < ActiveModel::Serializer
 
   # FIXME
   # has_one :question_dependency
+  # has_many :choices
 end

@@ -6,7 +6,7 @@ require 'acceptance_helper'
 resource 'Questions' do
   header 'Content-Type', 'application/json'
 
-  let(:q) { FactoryGirl.create(:question) }
+  let(:q) { FactoryGirl.create(:question, :with_choices) }
   let(:id) { q.id }
   let(:section_id) { q.section.id }
 
@@ -24,7 +24,8 @@ resource 'Questions' do
       response = JSON.parse(response_body)
       expect(response.keys).to eq %w[id key label content
                                      required order hidden question_type
-                                     validate_as question_dependency]
+                                     validate_as question_dependency
+                                     section_id choices]
       expect(response['id']). to eq q.id
       expect(response['key']). to eq q.key
       expect(response['label']). to eq q.label

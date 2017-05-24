@@ -6,11 +6,13 @@ require 'acceptance_helper'
 resource 'Forms' do
   header 'Content-Type', 'application/json'
 
-  let(:form) { FactoryGirl.create(:form) }
+  let!(:form) { FactoryGirl.create(:form, :with_questions_and_choices) }
 
   get 'api/v1/forms' do
     example 'Listing Forms' do
       do_request
+      response = JSON.parse(response_body)
+      expect(response.first.keys).to eq %w[id application sections questions]
       expect(status).to eq 200
     end
   end
