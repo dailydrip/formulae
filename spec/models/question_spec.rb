@@ -11,6 +11,7 @@ RSpec.describe Question, type: :model do
     it { is_expected.to respond_to(:question_type) }
     it { is_expected.to respond_to(:order) }
     it { is_expected.to respond_to(:required) }
+    it { is_expected.to respond_to(:placeholder) }
   end
 
   describe 'relations' do

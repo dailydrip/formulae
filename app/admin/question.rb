@@ -4,6 +4,7 @@ ActiveAdmin.register Question do
   permit_params :key,
                 :label,
                 :content,
+                :placeholder,
                 :order,
                 :required,
                 :hidden,

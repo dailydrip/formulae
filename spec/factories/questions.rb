@@ -4,6 +4,7 @@ FactoryGirl.define do
   factory :question do
     key Faker::Lorem.word
     label Faker::Lorem.word
+    placeholder Faker::Lorem.sentence
     content Faker::Lorem.sentence
     question_type 'string'
     validate_as Faker::Lorem.word

@@ -3,6 +3,7 @@
 class QuestionSerializer < ActiveModel::Serializer
   attributes :id, :key, :label, :content, :required,
              :order, :hidden, :question_type, :validate_as,
+             :placeholder,
              :question_dependency, :section_id, :choices
 
   # Not calling question dependency serializer, not sure why
