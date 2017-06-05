@@ -24,7 +24,7 @@ resource 'Questions' do
       response = JSON.parse(response_body)
       expect(response.keys).to eq %w[id key label content
                                      required order hidden question_type
-                                     validate_as question_dependency
+                                     validate_as placeholder question_dependency
                                      section_id choices]
       expect(response['id']). to eq q.id
       expect(response['key']). to eq q.key
@@ -34,6 +34,7 @@ resource 'Questions' do
       expect(response['hidden']). to eq q.hidden
       expect(response['question_type']). to eq q.question_type
       expect(response['validate_as']). to eq q.validate_as
+      expect(response['placeholder']). to eq q.placeholder
       expect(status).to eq 200
     end
   end
