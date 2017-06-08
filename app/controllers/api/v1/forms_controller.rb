@@ -71,6 +71,7 @@ class Api::V1::FormsController < Api::V1::ApiController
         content: q[:content],
         order: q[:order],
         placeholder: q[:placeholder],
+        validate_as: q[:validate_as],
         required: q[:required],
         question_type: q[:question_type],
         section: section
