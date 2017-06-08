@@ -12,7 +12,7 @@ resource 'Forms' do
     example 'Listing Forms' do
       do_request
       response = JSON.parse(response_body)
-      expect(response.first.keys).to eq %w[id application sections questions]
+      expect(response.first.keys).to eq %w[id application completion_content sections questions]
       expect(status).to eq 200
     end
   end
@@ -24,7 +24,7 @@ resource 'Forms' do
       do_request
 
       response = JSON.parse(response_body)
-      expect(response.keys).to eq %w[id application sections questions]
+      expect(response.keys).to eq %w[id application completion_content sections questions]
       expect(status).to eq 200
     end
   end

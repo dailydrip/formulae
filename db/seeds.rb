@@ -43,7 +43,8 @@ Question.create(section: s1,
 Question.create(section: s1,
                 order: 0,
                 key: 'Key', label: 'Email address',
-                content: 'Tell us your email address so we can contact you with special offers and sell it later when we go under!',
+                content: 'Tell us your email address so we can contact you with
+                  special offers and sell it later when we go under!',
                 required: true,
                 validate_as: 'email',
                 question_type: 'string', hidden: false)

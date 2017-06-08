@@ -51,7 +51,7 @@ class Api::V1::FormsController < Api::V1::ApiController
   end
 
   def form_params
-    params.require(:form).permit(:application_id, :sections, :questions)
+    params.require(:form).permit(:application_id, :completion_content, :sections, :questions)
   end
 
   def create_section_for(section_params, form)
