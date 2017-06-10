@@ -21,7 +21,7 @@ resource 'Form Submissions' do
       do_request
 
       response = JSON.parse(response_body)
-      expect(response.keys).to eq %w[id form]
+      expect(response.keys).to eq %w[id form question_submissions]
       expect(response['id']). to eq form_submission.id
       expect(status).to eq 200
     end
@@ -53,7 +53,7 @@ resource 'Form Submissions' do
 
     example_request 'Creating a form submission' do
       response = JSON.parse(response_body)
-      expect(response.keys).to eq %w[id form]
+      expect(response.keys).to eq %w[id form question_submissions]
       expect(response['form']['application_id']).to eq new_form_submission.form.application_id
       expect(status).to eq(201)
     end
