@@ -13,34 +13,28 @@ class Api::V1::FormsController < Api::V1::ApiController
   end
 
   def create
-    ActiveRecord::Base.transaction do
-      @form = Form.find_by(id: form_params[:id])
-      if !@form
-        @form = Form.new(form_params)
-        render_create
-      else
-        render_update
-      end
+    @form = Form.find_or_initialize_by(id: form_params[:id])
+    if !@form.persisted?
+      @form = Form.new(form_params)
+      render_create
+    else
+      render_update
     end
   end
 
   private def render_create
-    ActiveRecord::Base.transaction do
-      if @form.save!
-        render json: @form, status: :created
-      else
-        render json: @form.errors, status: :unprocessable_entity
-      end
+    if @form.save
+      render json: @form, status: :created
+    else
+      render json: @form.errors, status: :unprocessable_entity
     end
   end
 
   private def render_update
-    ActiveRecord::Base.transaction do
-      if @form.update_attributes!(form_params)
-        render json: @form, status: :ok
-      else
-        render json: @form.errors, status: :unprocessable_entity
-      end
+    if @form.update_attributes(form_params)
+      render json: @form, status: :ok
+    else
+      render json: @form.errors, status: :unprocessable_entity
     end
   end
 
