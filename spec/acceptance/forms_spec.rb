@@ -9,32 +9,13 @@ resource 'Forms' do
   let!(:form_object) { FactoryGirl.create(:form, :with_questions_and_choices) }
 
   post '/api/v1/forms' do
-    let(:new_form) { FormMethods.build_a_new_form }
+    let(:new_form_object) { FormMethods.build_a_new_form }
 
-    let(:form) do
-      desired_hash = {}
-      desired_hash = new_form.slice(:id, :completion_content, :application_id)
-      new_form.sections.map do |section|
-        section_value = section.slice(:id, :form_id, :name, :order, :content, :_destroy)
-        desired_hash[:sections] = []
-        desired_hash[:sections] << section_value
-
-        desired_hash[:sections].each do |sections_params|
-          questions_for_section = section.questions.map do |q|
-            q.slice(:id, :key, :label, :content, :order, :hidden,
-                    :question_type, :validate_as, :section_id, :required,
-                    :placeholder, :_destroy)
-          end
-          sections_params[:questions] = []
-          sections_params[:questions] = questions_for_section
-        end
-      end
-      desired_hash
-    end
+    let(:form) { FormMethods.create_params_for(new_form_object) }
 
     parameter :form
 
-    example_request 'Creating a form' do
+    example_request 'Creating a Form' do
       response = JSON.parse(response_body)
       expect(response.keys).to eq %w[id application completion_content sections questions]
       expect(response['application']['id']).to eq new_form.application_id
