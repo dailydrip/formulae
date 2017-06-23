@@ -9,14 +9,7 @@ resource 'Forms' do
   let!(:form_object) { FactoryGirl.create(:form, :with_questions_and_choices) }
 
   post '/api/v1/forms' do
-    let(:new_form) do
-      build_form = FactoryGirl.build(:form)
-      build_form.sections = FactoryGirl.build_list(:section, 3, form: build_form)
-      build_form.sections.each do |section|
-        section.questions << FactoryGirl.build(:question)
-      end
-      build_form
-    end
+    let(:new_form) { FormMethods.build_a_new_form }
 
     let(:form) do
       desired_hash = {}
