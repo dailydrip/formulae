@@ -18,7 +18,7 @@ resource 'Forms' do
     example_request 'Creating a Form' do
       response = JSON.parse(response_body)
       expect(response.keys).to eq %w[id application completion_content sections questions]
-      expect(response['application']['id']).to eq new_form.application_id
+      expect(response['application']['id']).to eq new_form_object.application_id
       expect(status).to eq(201)
     end
   end
