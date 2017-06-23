@@ -23,6 +23,26 @@ resource 'Forms' do
     end
   end
 
+  post '/api/v1/forms' do
+    let(:new_completion_content) { 'New Completion Content' }
+    let(:form) do
+      updated_form = FormMethods.create_params_for(form_object)
+      updated_form[:completion_content] = new_completion_content
+      updated_form
+    end
+
+    parameter :form
+
+    example_request 'Updating a Form' do
+      response = JSON.parse(response_body)
+      expect(response.keys).to eq %w[id application completion_content sections questions]
+      expect(response['id']).to eq form_object.id
+      expect(response['completion_content']).to eq new_completion_content
+      expect(response['application']['id']).to eq form_object.application_id
+      expect(status).to eq(200)
+    end
+  end
+
   get 'api/v1/forms' do
     example 'Listing Forms' do
       do_request
