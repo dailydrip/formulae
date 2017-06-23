@@ -23,14 +23,14 @@ resource 'Forms' do
       desired_hash = new_form.slice(:id, :completion_content, :application_id)
       new_form.sections.map do |section|
         section_value = section.slice(:id, :form_id, :name, :order, :content, :_destroy)
-        desired_hash[:sections]  = []
+        desired_hash[:sections] = []
         desired_hash[:sections] << section_value
 
         desired_hash[:sections].each do |sections_params|
           questions_for_section = section.questions.map do |q|
-            question_value = q.slice(:id, :key, :label, :content, :order, :hidden,
-                                     :question_type, :validate_as, :section_id, :required,
-                                     :placeholder, :_destroy)
+            q.slice(:id, :key, :label, :content, :order, :hidden,
+                    :question_type, :validate_as, :section_id, :required,
+                    :placeholder, :_destroy)
           end
           sections_params[:questions] = []
           sections_params[:questions] = questions_for_section
