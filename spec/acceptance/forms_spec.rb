@@ -89,4 +89,19 @@ resource 'Forms' do
       end
     end
   end
+
+  context 'No Application' do
+    let(:api_key) { FactoryGirl.create(:api_key) }
+    let(:authorization) { "Bearer #{api_key.token}" }
+
+    get 'api/v1/forms' do
+      example 'Listing Forms' do
+        do_request
+        response = JSON.parse(response_body)
+        expect(response.keys).to eq %w[error]
+        expect(response['error']).to eq 'There is no application for this Api Key'
+        expect(status).to eq 500
+      end
+    end
+  end
 end

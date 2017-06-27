@@ -7,15 +7,15 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-# Simple Command
+# Simple Command is a gem that makes it easy to produce nice command-patterns
 gem 'simple_command'
 
-# Active Model Serializers
+# Active Model Serializers helps us creating serializers for our API
 gem 'active_model_serializers', '~> 0.10.0'
 
-# Active Admin
+# Active Admin - It is a nice Admin View
 gem 'activeadmin'
-# Devise
+# Devise - Log in -- using it with active admin
 # https://github.com/plataformatec/devise/issues/4525
 gem 'devise', git: 'https://github.com/plataformatec/devise.git', branch: 'master'
 # Rack Cors
