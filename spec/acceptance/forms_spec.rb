@@ -10,7 +10,7 @@ resource 'Forms' do
   header 'Content-Type', 'application/json'
   header 'Authorization', :authorization
 
-  describe 'authorized' do
+  context 'authorized' do
     let(:api_key) { form_object.application.api_keys.first }
     let(:authorization) { "Bearer #{api_key.token}" }
 
@@ -81,7 +81,7 @@ resource 'Forms' do
     end
   end
 
-  describe 'Unauthorized' do
+  context 'Unauthorized' do
     get 'api/v1/forms' do
       example 'Listing Forms' do
         do_request
