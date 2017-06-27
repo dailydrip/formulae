@@ -13,7 +13,6 @@ class Api::V1::FormsController < Api::V1::ApiController
   end
 
   def create
-    byebug
     @form = @application.forms.find_or_initialize_by(id: form_params[:id])
     if !@form.persisted?
       @form = @application.forms.new(form_params)

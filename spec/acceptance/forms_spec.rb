@@ -11,8 +11,8 @@ resource 'Forms' do
   header 'Authorization', :authorization
 
   describe 'authorized' do
-    let(:api_key) { FactoryGirl.create(:api_key) }
-    let(:authorization) { "Bearer #{api_key.token}"}
+    let(:api_key) { form_object.application.api_keys.first }
+    let(:authorization) { "Bearer #{api_key.token}" }
 
     post '/api/v1/forms' do
       let(:new_form_object) { FormMethods.build_a_new_form }
@@ -24,7 +24,9 @@ resource 'Forms' do
       example_request 'Creating a Form' do
         response = JSON.parse(response_body)
         expect(response.keys).to eq %w[id application completion_content sections questions]
-        expect(response['application']['id']).to eq new_form_object.application_id
+        # The application id should be the same as before and not a new
+        # application id
+        expect(response['application']['id']).to eq form_object.application_id
         expect(status).to eq(201)
       end
     end
@@ -79,7 +81,7 @@ resource 'Forms' do
     end
   end
 
-  describe 'unauthorized' do
+  describe 'Unauthorized' do
     get 'api/v1/forms' do
       example 'Listing Forms' do
         do_request
