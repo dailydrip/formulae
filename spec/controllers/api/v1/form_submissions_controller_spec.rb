@@ -8,6 +8,7 @@ RSpec.describe Api::V1::FormSubmissionsController, type: :request do
       let!(:question_submissions) { FactoryGirl.build_list(:question_submission, 3) }
       let!(:new_form_submission) { FactoryGirl.build(:form_submission) }
       let(:form_id) { new_form_submission.form.id }
+      let(:token) { new_form_submission.form.application.api_keys.first.token }
 
       it 'creates only one form submission' do
         expect do
@@ -15,7 +16,7 @@ RSpec.describe Api::V1::FormSubmissionsController, type: :request do
                params: {
                  form_submission: { form_id: form_id,
                                     question_submissions: question_submissions }
-               }
+               }, headers: { Authorization: "Bearer #{token}" }
         end.to change { FormSubmission.count }.by(1)
       end
     end
@@ -33,6 +34,7 @@ RSpec.describe Api::V1::FormSubmissionsController, type: :request do
           ]]
         }
       end
+      let(:token) { form.application.api_keys.first.token }
 
       it 'creates question submissions for multi_select' do
         expect do
@@ -40,7 +42,7 @@ RSpec.describe Api::V1::FormSubmissionsController, type: :request do
                params: {
                  form_submission: { form_id: form.id,
                                     question_submissions: question_submissions }
-               }
+               }, headers: { Authorization: "Bearer #{token}" }
         end.to change { QuestionSubmission.count }.by(2)
         qs1, qs2 = QuestionSubmission.all
         expect(qs1.value).to eq('foo')
@@ -70,6 +72,7 @@ RSpec.describe Api::V1::FormSubmissionsController, type: :request do
             ]]
           }
         end
+        let(:token) { form.application.api_keys.first.token }
 
         it 'creates question submissions' do
           expect do
@@ -77,7 +80,7 @@ RSpec.describe Api::V1::FormSubmissionsController, type: :request do
                  params: {
                    form_submission: { form_id: form.id,
                                       question_submissions: question_submissions }
-                 }
+                 }, headers: { Authorization: "Bearer #{token}" }
           end.to change { QuestionSubmission.count }.by(3)
           qs1, qs2, qs3 = QuestionSubmission.all
           expect(qs1.value).to eq('foo')
