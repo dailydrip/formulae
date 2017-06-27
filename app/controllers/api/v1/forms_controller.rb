@@ -4,7 +4,7 @@ class Api::V1::FormsController < Api::V1::ApiController
   before_action :find_form, only: %i[show destroy]
 
   def index
-    @forms = Form.all
+    @forms = @application.forms.all
     render json: @forms
   end
 
@@ -13,9 +13,10 @@ class Api::V1::FormsController < Api::V1::ApiController
   end
 
   def create
-    @form = Form.find_or_initialize_by(id: form_params[:id])
+    byebug
+    @form = @application.forms.find_or_initialize_by(id: form_params[:id])
     if !@form.persisted?
-      @form = Form.new(form_params)
+      @form = @application.forms.new(form_params)
       render_create
     else
       render_update

@@ -2,10 +2,9 @@
 
 class Application < ApplicationRecord
   has_many :api_keys
+  has_many :forms
 
-  def authorize(application_id, api_key)
-    # FIXME:
-    # Iterate over api_keys and check if one of them can be authorized
-    true
+  def self.authorize(api_key)
+    ApiKey.find_by(token: api_key)
   end
 end

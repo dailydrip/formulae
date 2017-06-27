@@ -7,6 +7,8 @@ RSpec.describe ApiKey, type: :model do
     it { is_expected.to respond_to(:creator) }
     it { is_expected.to respond_to(:submitter) }
     it { is_expected.to respond_to(:analytics) }
+    it { is_expected.to respond_to(:token) }
+    it { is_expected.to validate_uniqueness_of(:token) }
   end
 
   describe 'relations' do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609213928) do
+ActiveRecord::Schema.define(version: 20170627165556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,9 @@ ActiveRecord::Schema.define(version: 20170609213928) do
     t.boolean "analytics"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "token"
     t.index ["application_id"], name: "index_api_keys_on_application_id"
+    t.index ["token"], name: "index_api_keys_on_token", unique: true
   end
 
   create_table "applications", id: :serial, force: :cascade do |t|
